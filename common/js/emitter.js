@@ -1,5 +1,8 @@
 var Emitter = {
   events:[],
+  _onMessage_emit: function(data,from){
+    this.emit(data.event,data.data);
+  },
   on:function(target,eventName){
     var result = false;
     this.events.forEach(event=>{
@@ -26,7 +29,7 @@ var Emitter = {
       });
     }
     else{
-      console.log("ERROR: emit: event is not registered by any target "+eventName);
+      console.log("ERROR: emit: event is not registered by any target event=["+eventName+"]");
     }
   },
 };
