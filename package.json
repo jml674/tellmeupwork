@@ -1,0 +1,13 @@
+{
+  "version": "1.2.9",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp-add-src": "^0.2.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-babel-minify": "^0.1.12",
+    "gulp-ignore": "^2.0.1",
+    "gulp-minify": "0.0.14",
+    "gulp-vinyl-zip": "^1.4.0",
+    "gulp-zip": "^3.2.0"
+  }
+}
