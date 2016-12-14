@@ -26,6 +26,7 @@
       "common/js/messenger.js",
       "common/js/iconeApplication.js",
       "common/js/notification.js",
+      "common/js/cookie.js",
       "main.js"
     ]
   }, 

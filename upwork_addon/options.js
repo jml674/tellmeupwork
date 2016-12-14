@@ -10,20 +10,30 @@ $("#btn-cancel").click(function(){
 
 $("#btn-ok").click(function(){  
   console.log("btn-ok clicked");
+  var levelFilter="";
   var $inputUrls = $("#input-urls").val().trim();
   $inputUrls =$inputUrls.replace(";",",");
   $inputUrls =$inputUrls.replace("","");
+
+  if ($("#input-beginner")[0].checked){
+    levelFilter+=(levelFilter.length?",":"")+"($)";
+  }
+  if ($("#input-intermediate")[0].checked){
+    levelFilter+=(levelFilter.length?",":"")+"($$)";
+  }
+  if ($("#input-expert")[0].checked){
+    levelFilter+=(levelFilter.length?",":"")+"($$$)";
+  }
   var options = {bullhornPassword:$("#input-password").val(),
                 bullhornUserName:$("#input-username").val(),
                 emailAddress: $("#input-email-address").val(),
-                inputUrls:$inputUrls};
+                inputUrls:$inputUrls,
+                levelFilter: levelFilter
+              };
   if ($.data(options) != $.data(_options)) {
     Options.set(options)
     .then(()=>{
-        chrome.runtime.sendMessage({ action: "BullhornMgr.optionsChanged", data:{options}}, result=> {
-            console.log("Got reply:", result);
-        }); 
-        chrome.runtime.sendMessage({ action: "EmailHunter.optionsChanged", data:{options}}, result=> {
+        chrome.runtime.sendMessage({ action: "Emitter.emit", data:{data:options,event:"OptionsChanged"}}, result=> {
             console.log("Got reply:", result);
             window.close();
         }); 
@@ -39,5 +49,14 @@ $(function() {
       $("#input-password").val(options.bullhornPassword);
       $("#input-email-address").val(options.emailAddress);
       $("#input-urls").val(options.inputUrls);
+      if (options.levelFilter.search("\\(\\$\\)")!=-1){
+          $("#input-beginner")[0].checked = true;
+      }
+      if (options.levelFilter.search("\\(\\$\\$\\)")!=-1){
+          $("#input-intermediate")[0].checked = true;
+      }
+      if (options.levelFilter.search("\\(\\$\\$\\$\\)")!=-1){
+          $("#input-expert")[0].checked = true;
+      }
     })
 });
