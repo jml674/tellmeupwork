@@ -15,6 +15,7 @@ $("#btn-ok").click(function(){
   $inputUrls =$inputUrls.replace("","");
   var options = {bullhornPassword:$("#input-password").val(),
                 bullhornUserName:$("#input-username").val(),
+                emailAddress: $("#input-email-address").val(),
                 inputUrls:$inputUrls};
   if ($.data(options) != $.data(_options)) {
     Options.set(options)
@@ -36,6 +37,7 @@ $(function() {
       _options = options;
       $("#input-username").val(options.bullhornUserName);
       $("#input-password").val(options.bullhornPassword);
+      $("#input-email-address").val(options.emailAddress);
       $("#input-urls").val(options.inputUrls);
     })
 });

@@ -23,7 +23,8 @@ var Options = {
         mailAddressReporting :"",
         delay:1,
         silentMode:false,
-        inputUrls:"" 
+        inputUrls:"" ,
+        emailAddress:""
       }, function(options) {
         resolve(options);
       });

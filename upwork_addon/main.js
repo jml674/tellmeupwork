@@ -30,10 +30,7 @@ var UpworkAddonMgr = {
   _window:null,
   _criteria:null,
   _callbackForWindow: null,  
-  _onEventLoggedInOutUpwork:function(value){
-    console.log("upworkAddonMgr: _onEventLoggedInOutUpwork "+value);
-    IconApplicationMgr.set({loggedIn:value});
-  },
+
   _onMessage_jobs: function(data,from){
     if (this._callbackForWindow){
       this._callbackForWindow(data);
@@ -44,21 +41,20 @@ var UpworkAddonMgr = {
     reply({criteria : this._criteria});
   },
   initialize:function(){
-    //Emitter.on(UpworkAddonMgr,"LoggedInOutUpwork");
     //Emitter.emit("LoggedInOutUpwork",false);
     Options.get().then(options=>{
       var urls=options.inputUrls.split(",");
       //urls.push("https://www.upwork.com/ab/find-work/712161");
       //urls.push("https://www.upwork.com/ab/find-work/695557");
       var jobs1=[];
-      this.scanPage(urls,0,jobs1);
+      this.scanPage(urls,0,jobs1,options.emailAddress);
       setTimeout(()=>{
         var jobs2=[];
-        this.scanPage(urls,0,jobs2);
+        this.scanPage(urls,0,jobs2,options.emailAddress);
       },SCAN_PERIOD);
     })
   },
-  scanPage:function(urls,index,jobs){
+  scanPage:function(urls,index,jobs,emailAddress){
       //if (index==0){
           this.createWindow(urls[index]).then(result=>{
             this._window = result.window;
@@ -66,8 +62,8 @@ var UpworkAddonMgr = {
             jobs = jobs.concat(result.jobs);
             //if (index==urls.length-1){
               if (this._window) chrome.windows.remove(this._window.id);
-              if (index<urls.length-1) this.scanPage(urls,index+1,jobs);
-              else this.processJobs(jobs); 
+              if (index<urls.length-1) this.scanPage(urls,index+1,jobs,emailAddress);
+              else this.processJobs(jobs,emailAddress); 
               //this.processJobs(jobs);
             /*}
             else{
@@ -124,8 +120,9 @@ var UpworkAddonMgr = {
       });
     });
   },
-  processJobs:function(jobs){
+  processJobs:function(jobs, emailAddress){
     var text="";
+    var counter = 0;
     jobs.forEach(job=>{
       if (/[0-9]{1,2} minutes ago/.exec(job.posted) != null && (job.level=="Intermediate ($$)" || job.level=="Expert ($$$)")){
         console.log("Sending job ",job);
@@ -140,17 +137,19 @@ var UpworkAddonMgr = {
                       
                     });
         text+= (text.length!=0?"\n":"")+strHtml;
+        counter++;
       }
     });
-    if (text!=""){
+    if (counter>0){
       var message = '<html><body>\n';
       message += text+'\n';
       message += '</body></html>';
-      this.sendEmail("new jobs from Upwork",message);
+      this.sendEmail(emailAddress,"New jobs from Upwork",message);
     }
+    Emitter.emit("JobsFound", counter.toString());
   },
-  sendEmail:function(subject,content){
-    $.post("http://tvsurftv.com/UPWORK/sendemail.php",{subject:subject,content:content});
+  sendEmail:function(emailAddress, subject, content){
+    $.post("http://tvsurftv.com/UPWORK/sendemail.php",{emailAddress:emailAddress,subject:subject,content:content});
   }
 }
 UpworkAddonMgr.initialize();
