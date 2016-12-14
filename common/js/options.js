@@ -24,7 +24,8 @@ var Options = {
         delay:1,
         silentMode:false,
         inputUrls:"" ,
-        emailAddress:""
+        emailAddress:"",
+        levelFilter:""
       }, function(options) {
         resolve(options);
       });
