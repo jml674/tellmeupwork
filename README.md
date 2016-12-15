@@ -3,7 +3,7 @@
 **Usage**
 
 Allows to monitor a set of job searches every 30 mns and send an email including all new jobs found.
-Perform a upwork job search and select "Add url to watchlist" using right-click.
+Perform a upwork job search and select "Add url to watchlist" using right-click. Monitoring is started as soon as the watchlist is populated with some url.
 
 **Notes**
 
