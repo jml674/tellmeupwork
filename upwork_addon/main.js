@@ -14,12 +14,36 @@ const SCAN_PERIOD=1800000;
 chrome.identity.getProfileUserInfo(function(userInfo) {
  /* Use userInfo.email, or better (for privacy) userInfo.id
     They will be empty if user is not signed in in Chrome */
-    console.log("userInfo:",userInfo);
+    console.log(now(),"userInfo:",userInfo);
     //tracker.sendAppView("StartingExtension");
     chrome.runtime.onInstalled.addListener(function(details){
       //tracker.sendEvent('system-'+details.reason,"bulk-"+chrome.runtime.getManifest().version, userInfo.email);
     }); 
 });
+
+// context menu
+chrome.contextMenus.create({contexts:["all"],title:"Add Url to watch list ",id:"TellMeUpwork-AddUrl",documentUrlPatterns:["https://www.upwork.com/ab/find-work/*"]}, function(){
+
+});
+chrome.contextMenus.onClicked.addListener(function(info,tab){
+  if(info.menuItemId == "TellMeUpwork-AddUrl"){
+    console.log("Adding url "+tab.url);
+    Options.get().then(options=>{
+      var _options = options.inputUrls.split(",");
+      if (!_options.find(function(element){
+        return element == tab.url;
+      })){
+        options.inputUrls+=(options.inputUrls.length?",":"")+tab.url;
+        Options.set({inputUrls:options.inputUrls});  
+      }
+      else{
+        alert("url already monitored !!");
+      }
+      
+    });
+  }
+}); 
+
 // show sidebar
 chrome.browserAction.onClicked.addListener(tab=>{
  
@@ -72,7 +96,7 @@ var UpworkAddonMgr = {
       //if (index==0){
           this.createWindow(urls[index]).then(result=>{
             this._window = result.window;
-            console.log("scanPage1 jobs",result.jobs);
+            console.log(now(),"scanPage1 jobs",result.jobs);
             jobs = jobs.concat(result.jobs);
             //if (index==urls.length-1){
               if (this._window) chrome.windows.remove(this._window.id);
@@ -87,7 +111,7 @@ var UpworkAddonMgr = {
       //}
       /*else{
         this.updateWindow(urls[index]).then(result=>{
-            console.log("scanPage2 jobs",result.jobs);
+            console.log(now(),"scanPage2 jobs",result.jobs);
             jobs = jobs.concat(result.jobs);
             if (index==urls.length-1){
               if(this._window) chrome.windows.remove(this._window.id);
@@ -144,7 +168,7 @@ var UpworkAddonMgr = {
       jobLevel=jobLevel.replace(/\$/g,"\\$");  
       
       if (/[0-9]{1,2} minutes ago/.exec(job.posted) != null && (options.levelFilter.search(jobLevel)!=-1)){
-        console.log("Sending job ",job);
+        console.log(now(),"Sending job ",job);
         var strHtml = TemplateParser.parse(
                     'templates/job.html',
                     {

@@ -10,7 +10,7 @@
     "64": "common/icons/upwork-48x48.png"
   },
 //@if ENVDST!='production'
-  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAybzNy7o8pq3BJ7UTB55kfDfDsKxouD0n4/4BNNWlos4oBj3xBH4Lc3WWxJzDzACzHEi93rzb3oorcmtC/aCDAZZmMWwJUtiRlrOUoYVWe5z0tjlT/MslrLSUQxP9bm07SYX2FqIFHtZe35/HVdjfMFD5OkumjzTiw6/t3uIVGVcd5501MkvuFeSGkohqU9oQWg8Yu/MQL0k9QvSFnBzntu866xrdKJUCtAJpJhyISgQcqVgmXVim7wMyJ9QSsRdjHjLEAr0HEmm5iAKTbATCsYvPvO0sCkEp+YczN685mkXWfccxvDO53JQU5PFlxswc6sqCzoLhFPpb5igUTv64MwIDAQAB",
+  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqjhJPAfjFYPs6i0YHl4SUGw/0Ukv4I118bz4IMcxGi2BVRBI0NwnQEETnE7sFH5+BCJbSGQHbIqB/FluMrCP4QdY1Iw5FdXOBGBdEAQQYrTlr+o8pRQZUWHqvXG4T5+50+bQiyD4lu4Fr8Ldsypr7AGnDFVK+AOhi/YnOzF9MUWkHAqpPpSwat9bpyLgVfTsBzHZgsAT9thLCV9pdEDYiOx91MywCkDXEDBAVU+sFv6nG1wyWxVrTVTbXG0SgMV3JvRJdwMAYOirYgYW73ZJIoSVWHYjUQQz9JPFRyiHt2FColLzRdt6+X9xkgLMrvHesmmWR3y/WyyZmJL/79ImmQIDAQAB",
   //@endif 
   "background": {
     "persistent": true,
@@ -35,6 +35,7 @@
     "webNavigation",
     "cookies",
     "storage",
+    "contextMenus",
     "identity",
     "identity.email",
     "downloads",

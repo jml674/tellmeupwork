@@ -22,3 +22,14 @@ function stopWaitWindowResponse(timeoutID){
   console.log("stopWaitWindowResponse clearing:"+timeoutID);
   clearTimeout(timeoutID);
 }
+function now(){
+  var now = new Date();
+  return "("+now.getUTCDate()+"/"+(now.getUTCMonth() + 1) +")("+
+        pad(now.getUTCHours()) +":"+
+        pad(now.getUTCMinutes()) +":"+
+        pad(now.getUTCSeconds())+")";
+}
+function pad(x){
+  if (x<10) return "0"+x;
+  else return x.toString();
+}
