@@ -13,7 +13,7 @@ Perform a upwork job search and select "Add url to watchlist" using right-click.
 **Configuration thru the addon options panel:**
 - right click on the Tellmeupwork icon in the menu bar and select "Options"
 - specify email address where to send the reports.
-- edit monitored urls list
+- edit monitored urls list, urls must be separated by a comma
 - select specific job type and experience levels
 
 **Build**
