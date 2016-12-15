@@ -25,7 +25,8 @@ var Options = {
         silentMode:false,
         inputUrls:"" ,
         emailAddress:"",
-        levelFilter:""
+        levelFilter:"($),($$),($$$)",
+        jobType:"Fixed-Price,Hourly"
       }, function(options) {
         resolve(options);
       });

@@ -74,7 +74,11 @@ var UpworkAddonMgr = {
       //urls.push("https://www.upwork.com/ab/find-work/695557");
       var jobs1=[];
       CookieMgr.get("https://.upwork.com/ab/account-security","master_refresh_token").then(cookie=>{
-        if (cookie) this.scanPage(urls,0,jobs1,options);
+        if (cookie){
+          if(options.inputUrls.length!=0) {
+            this.scanPage(urls,0,jobs1,options);
+          }
+        }
         else{
           chrome.tabs.create({url:"https://www.upwork.com/ab/account-security/login"}, function (){})
         }
@@ -83,7 +87,9 @@ var UpworkAddonMgr = {
         var jobs2=[];
         CookieMgr.get("https://.upwork.com/ab/account-security","master_refresh_token").then(cookie=>{
           if (cookie){
-            this.scanPage(urls,0,jobs2,options);
+            if(options.inputUrls.length!=0){
+              this.scanPage(urls,0,jobs2,options);
+            }
           }
           else{
             chrome.tabs.create({url:"https://www.upwork.com/ab/account-security/login"}, function (){})
@@ -125,7 +131,7 @@ var UpworkAddonMgr = {
   },
   createWindow:function(url){
     return new Promise((resolve, reject) => {
-      
+      console.log(now(),"Creating window for url:"+url)
       chrome.windows.create({type: POPUP_TYPE ,state:POPUP_STATE,url:url+"&upworkFlag"},(window)=>{
         this._callbackForWindow = function(reply){
           resolve({window:window,jobs:reply});
@@ -167,7 +173,7 @@ var UpworkAddonMgr = {
       jobLevel=jobLevel.replace(/\)/,"\\)");  
       jobLevel=jobLevel.replace(/\$/g,"\\$");  
       
-      if (/[0-9]{1,2} minutes ago/.exec(job.posted) != null && (options.levelFilter.search(jobLevel)!=-1)){
+      if (/[0-9]{1,2} minutes ago/.exec(job.posted) != null && options.levelFilter.search(jobLevel)!=-1 && options.jobType.search(job.type)!=-1){
         console.log(now(),"Sending job ",job);
         var strHtml = TemplateParser.parse(
                     'templates/job.html',

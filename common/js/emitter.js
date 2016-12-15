@@ -29,7 +29,7 @@ var Emitter = {
       });
     }
     else{
-      console.log("ERROR: emit: event is not registered by any target event=["+eventName+"]");
+      console.log("Warning: emit: event is not registered by any target event=["+eventName+"]");
     }
   },
 };

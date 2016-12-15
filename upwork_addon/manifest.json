@@ -1,9 +1,10 @@
 {
 
-  "description": "Get notified when interesting jobs get published",
+  "description": "Get notified by email when interesting jobs get published",
   "manifest_version": 2,
-  "name": "TellMeUpwork",
-  "version": "0.1",
+  "name": "TellMeUpwork (by tvsurftv team)",
+  "short_name": "TellMeUpwork",
+  "version": "1.0.3",
   "homepage_url": "https://tvsurftv.com",
   "icons": {
     "32": "common/icons/upwork-48x48.png",

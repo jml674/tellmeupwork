@@ -1,3 +1,6 @@
+const JOB_TYPE_FIXED = "Fixed-Price";
+const JOB_TYPE_HOURLY = "Hourly";
+
 var _options=null;
 $("#btn-eye-password").click(function(){
   console.log("btn-eye clicked");
@@ -11,6 +14,7 @@ $("#btn-cancel").click(function(){
 $("#btn-ok").click(function(){  
   console.log("btn-ok clicked");
   var levelFilter="";
+  var jobType="";
   var $inputUrls = $("#input-urls").val().trim();
   $inputUrls =$inputUrls.replace(";",",");
   $inputUrls =$inputUrls.replace("","");
@@ -24,11 +28,18 @@ $("#btn-ok").click(function(){
   if ($("#input-expert")[0].checked){
     levelFilter+=(levelFilter.length?",":"")+"($$$)";
   }
+  if ($("#input-jobType-"+JOB_TYPE_FIXED)[0].checked){
+    jobType+=(jobType.length?",":"")+JOB_TYPE_FIXED;
+  }
+  if ($("#input-jobType-"+JOB_TYPE_HOURLY)[0].checked){
+    jobType+=(jobType.length?",":"")+JOB_TYPE_HOURLY;
+  }
   var options = {bullhornPassword:$("#input-password").val(),
                 bullhornUserName:$("#input-username").val(),
                 emailAddress: $("#input-email-address").val(),
                 inputUrls:$inputUrls,
-                levelFilter: levelFilter
+                levelFilter: levelFilter,
+                jobType: jobType
               };
   if ($.data(options) != $.data(_options)) {
     Options.set(options)
@@ -57,6 +68,12 @@ $(function() {
       }
       if (options.levelFilter.search("\\(\\$\\$\\$\\)")!=-1){
           $("#input-expert")[0].checked = true;
+      }
+      if (options.jobType.search(JOB_TYPE_FIXED)!=-1){
+          $("#input-jobType-"+JOB_TYPE_FIXED)[0].checked = true;
+      }
+      if (options.jobType.search(JOB_TYPE_HOURLY)!=-1){
+          $("#input-jobType-"+JOB_TYPE_HOURLY)[0].checked = true;
       }
     })
 });

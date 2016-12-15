@@ -5,6 +5,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="common/vendor/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="common/css/options.css"  />
     <title>Upwork Options</title>
     <style>
       body: { padding: 10px; }
@@ -22,13 +23,29 @@
      </div>
      <div class="row">
           <span>
-            <input type="checkbox" id="input-beginner" />
-            <label for="input-beginner">($)</label>
-            <input type="checkbox" id="input-intermediate" />
-            <label for="input-intermediate">($$)</label>
-            <input type="checkbox" id="input-expert" />
-            <label for="input-expert">($$$)</label>
+            <span class="choice">
+              <input type="checkbox" id="input-beginner" />
+              <label for="input-beginner">($)</label>
+            </span>
+            <span class="choice">
+              <input type="checkbox" id="input-intermediate" />
+              <label for="input-intermediate">($$)</label>
+            </span>
+            <span class="choice">
+              <input type="checkbox" id="input-expert" />
+              <label for="input-expert">($$$)</label>
+            <span>
           </span>
+    </div>
+    <div class="row">
+       <span class="choice">
+          <input type="checkbox" id="input-jobType-Hourly" />
+          <label for="input-jobType-Hourly">Hourly</label>
+       </span>
+       <span class="choice">
+          <input type="checkbox" id="input-jobType-Fixed-Price" />
+          <label for="input-jobType-Fixed-Price">Fixed-price</label>
+       </span>
     </div>
     <div class="row">
         <h6 class="col s8 m8 l8"><strong>URLs to monitor</strong></h6>
