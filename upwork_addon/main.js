@@ -5,11 +5,11 @@ const POPUP_TYPE="normal";
 const SCAN_PERIOD=1800000;
 //const SCAN_PERIOD=60000;
 
-//const BULK_GAP='UA-39332177-3';
-//const BULK_APP_ID = 'bulk_app';
+const GAP='UA-39332177-5';
+const APP_ID = 'Tellmeupwork';
 
-//var service = analytics.getService(BULK_APP_ID);
-//var tracker = service.getTracker(BULK_GAP);  // Supply your GA Tracking ID.
+var service = analytics.getService(APP_ID);
+var tracker = service.getTracker(GAP);  // Supply your GA Tracking ID.
 
 chrome.identity.getProfileUserInfo(function(userInfo) {
  /* Use userInfo.email, or better (for privacy) userInfo.id
@@ -17,7 +17,7 @@ chrome.identity.getProfileUserInfo(function(userInfo) {
     console.log(now(),"userInfo:",userInfo);
     //tracker.sendAppView("StartingExtension");
     chrome.runtime.onInstalled.addListener(function(details){
-      //tracker.sendEvent('system-'+details.reason,"bulk-"+chrome.runtime.getManifest().version, userInfo.email);
+      tracker.sendEvent('system-'+details.reason,"tmu-"+chrome.runtime.getManifest().version, userInfo.email);
     }); 
 });
 
@@ -27,7 +27,7 @@ chrome.contextMenus.create({contexts:["all"],title:"Add Url to watch list ",id:"
 });
 chrome.contextMenus.onClicked.addListener(function(info,tab){
   if(info.menuItemId == "TellMeUpwork-AddUrl"){
-    console.log("Adding url "+tab.url);
+    console.log(now(),"Adding url "+tab.url);
     Options.get().then(options=>{
       var _options = options.inputUrls.split(",");
       if (!_options.find(function(element){
@@ -85,15 +85,18 @@ var UpworkAddonMgr = {
       });
       setInterval(()=>{
         var jobs2=[];
-        CookieMgr.get("https://.upwork.com/ab/account-security","master_refresh_token").then(cookie=>{
-          if (cookie){
-            if(options.inputUrls.length!=0){
-              this.scanPage(urls,0,jobs2,options);
+        Options.get().then(options=>{
+          urls=options.inputUrls.split(",");
+          CookieMgr.get("https://.upwork.com/ab/account-security","master_refresh_token").then(cookie=>{
+            if (cookie){
+              if(options.inputUrls.length!=0){
+                this.scanPage(urls,0,jobs2,options);
+              }
             }
-          }
-          else{
-            chrome.tabs.create({url:"https://www.upwork.com/ab/account-security/login"}, function (){})
-          }
+            else{
+              chrome.tabs.create({url:"https://www.upwork.com/ab/account-security/login"}, function (){})
+            }
+          });
         });
       },SCAN_PERIOD);
     })
@@ -198,7 +201,9 @@ var UpworkAddonMgr = {
     Emitter.emit("JobsFound", counter.toString());
   },
   sendEmail:function(options, subject, content){
-    $.post("http://tvsurftv.com/UPWORK/sendemail.php",{emailAddress:options.emailAddress,subject:subject,content:content});
+    if (options.emailAddress.length!=0){
+      $.post("http://tvsurftv.com/UPWORK/sendemail.php",{emailAddress:options.emailAddress,subject:subject,content:content});
+    }
   }
 }
 UpworkAddonMgr.initialize();

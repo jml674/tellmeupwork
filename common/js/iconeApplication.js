@@ -3,7 +3,7 @@ var IconApplicationMgr={
     Emitter.on(this,"JobsFound");
   },
   _onEventJobsFound:function(value){
-    console.log("upworkAddonMgr: _onEventJobsFound "+value);
+    console.log(now(),"upworkAddonMgr: _onEventJobsFound "+value);
     IconApplicationMgr.set({number:value});
   },  
   set:function(property){

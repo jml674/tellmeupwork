@@ -3,16 +3,16 @@ const JOB_TYPE_HOURLY = "Hourly";
 
 var _options=null;
 $("#btn-eye-password").click(function(){
-  console.log("btn-eye clicked");
+  console.log(now(),"btn-eye clicked");
   $("#input-password").attr("type","text");
 })
 $("#btn-cancel").click(function(){
-  console.log("btn-cancel clicked");
+  console.log(now(),"btn-cancel clicked");
   window.close();
 })
 
 $("#btn-ok").click(function(){  
-  console.log("btn-ok clicked");
+  console.log(now(),"btn-ok clicked");
   var levelFilter="";
   var jobType="";
   var $inputUrls = $("#input-urls").val().trim();
@@ -45,7 +45,7 @@ $("#btn-ok").click(function(){
     Options.set(options)
     .then(()=>{
         chrome.runtime.sendMessage({ action: "Emitter.emit", data:{data:options,event:"OptionsChanged"}}, result=> {
-            console.log("Got reply:", result);
+            console.log(now(),"Got reply:", result);
             window.close();
         }); 
     });

@@ -1,10 +1,10 @@
 {
 
-  "description": "Get notified by email when interesting jobs get published",
+  "description": "Never apply too late for an interesting job again!!",
   "manifest_version": 2,
   "name": "TellMeUpwork (by tvsurftv team)",
   "short_name": "TellMeUpwork",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "homepage_url": "https://tvsurftv.com",
   "icons": {
     "32": "common/icons/upwork-48x48.png",
@@ -19,6 +19,7 @@
       "common/vendor/js/jquery.min.js",
       "common/vendor/js/underscore-min.js",
       "common/vendor/js/throttled-queue.js",
+      "common/vendor/js/google-analytics-bundle.js",
       "common/js/util.js",
       "common/js/utils.js",
       "common/js/api.js",

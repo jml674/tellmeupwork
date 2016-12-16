@@ -1,4 +1,4 @@
-log = Function.prototype.bind.call(console.log,console);
+log = Function.prototype.bind.call(console.log,console,now());
 
 //TODO: extract domain using library
 function getDomainFromUrl(url){

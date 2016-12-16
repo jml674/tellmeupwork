@@ -24,12 +24,12 @@ var Emitter = {
           target[method](value);
         }
         else{
-          console.log("ERROR: emit: target has no method "+method);
+          console.log(now(),"ERROR: emit: target has no method "+method);
         }
       });
     }
     else{
-      console.log("Warning: emit: event is not registered by any target event=["+eventName+"]");
+      console.log(now(),"Warning: emit: event is not registered by any target event=["+eventName+"]");
     }
   },
 };
