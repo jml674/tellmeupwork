@@ -1,13 +1,11 @@
 function ReplaceKeywords(str,obj){
-  var result = "";
   for (var i in obj) {
     if (obj.hasOwnProperty(i)) {
       var regexp = new RegExp("{"+i+"}","g")
-      str = str.replace(regexp,obj[i]);
-      result +=  i + " = " + obj[i] + " ";
+      var replacement=obj[i].replace(/\$/g,"$$$$");
+      str = str.replace(regexp,replacement);
     }
   }
-  //str = str.replace(/\"\"/g,"");
   return str;
 }
 var browserAPI = {
