@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "name": "TellMeUpwork (by tvsurftv team)",
   "short_name": "TellMeUpwork",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "homepage_url": "https://tvsurftv.com",
   "icons": {
     "32": "common/icons/upwork-48x48.png",

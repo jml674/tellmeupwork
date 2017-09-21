@@ -55,6 +55,7 @@ var UpworkAddonMgr = {
   _window:null,
   _criteria:null,
   _callbackForWindow: null,  
+  _lastJobs:[],
   _onMessage_jobs: function(data,from){
     if (this._callbackForWindow){
       this._callbackForWindow(data);
@@ -170,13 +171,9 @@ var UpworkAddonMgr = {
   processJobs:function(jobs, options){
     var text="";
     var counter = 0;
-    jobs.forEach(job=>{
-      var jobLevel = job.level.replace(/[a-zA-Z ]*/,"");
-     jobLevel=jobLevel.replace(/\(/,"\\(");
-      jobLevel=jobLevel.replace(/\)/,"\\)");  
-      jobLevel=jobLevel.replace(/\$/g,"\\$");  
-      
-      if (/[0-9]{1,2} minutes ago/.exec(job.posted) != null && options.levelFilter.search(jobLevel)!=-1 && options.jobType.search(job.type)!=-1){
+    jobs.forEach(job=>{      
+      var already_reported = this._lastJobs.find(function(j){ return j.upworkUrl === job.upworkUrl;});
+      if (this.passFilter(job,options) && !already_reported){
         console.log(now(),"Sending job ",job);
         var strHtml = TemplateParser.parse(
                     'templates/job.html',
@@ -186,10 +183,12 @@ var UpworkAddonMgr = {
                       jobType: job.type,
                       jobLevel: job.level,
                       jobPosted: job.posted,
-                      
                     });
         text+= (text.length!=0?"\n":"")+strHtml;
         counter++;
+      }
+      else{
+        console.log("job:",job," does not pass the filters F="+this.passFilter(job,options)+" AR=",already_reported);
       }
     });
     if (counter>0){
@@ -197,8 +196,17 @@ var UpworkAddonMgr = {
       message += text+'\n';
       message += '</body></html>';
       this.sendEmail(options,"New jobs from Upwork",message);
+      this._lastJobs = jobs;
     }
     Emitter.emit("JobsFound", counter.toString());
+  },
+  passFilter:function(job,options){
+    var jobLevel = job.level.replace(/[a-zA-Z ]*/,"");
+    jobLevel=jobLevel.replace(/\(/,"\\(");
+    jobLevel=jobLevel.replace(/\)/,"\\)");  
+    jobLevel=jobLevel.replace(/\$/g,"\\$"); 
+    return ((/[0-9]{1,2} minutes ago/.exec(job.posted) != null || /1 hour ago/.exec(job.posted) != null) && 
+            options.levelFilter.search(jobLevel)!=-1 && options.jobType.search(job.type)!=-1);
   },
   sendEmail:function(options, subject, content){
     if (options.emailAddress.length!=0){
