@@ -5,9 +5,18 @@
     "gulp-add-src": "^0.2.0",
     "gulp-babel": "^6.1.2",
     "gulp-babel-minify": "^0.1.12",
-    "gulp-ignore": "^2.0.1",
+    "gulp-ignore": "^2.0.2",
     "gulp-minify": "0.0.14",
     "gulp-vinyl-zip": "^1.4.0",
     "gulp-zip": "^3.2.0"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "gulp-flatten": "^0.4.0",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-standard": "^10.1.2",
+    "gulp-template": "^5.0.0",
+    "gulp-watch": "^5.0.0",
+    "run-sequence": "^2.2.1"
   }
 }

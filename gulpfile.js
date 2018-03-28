@@ -6,12 +6,12 @@ var flatten = require('gulp-flatten');
 var exec = require('child_process').exec;
 var standard = require('gulp-standard')
 var watch = require('gulp-watch');
-var zip = require('gulp-vinyl-zip');
+//var zip = require('gulp-vinyl-zip');
 var addsrc = require('gulp-add-src');
 var babelminify = require('gulp-babel-minify');
 var gulpIgnore = require('gulp-ignore');
 var del = require('del');
-var babel = require('gulp-babel');
+//var babel = require('gulp-babel');
 
 var package = require('./package.json');
 console.log("p.version="+package.version);
